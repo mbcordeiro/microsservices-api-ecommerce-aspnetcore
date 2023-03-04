@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace CatalogAPI.Data
 {
-    public class CatalogContextSedd
+    public class CatalogContextSeed
     {
         public static void SeedData(IMongoCollection<Product> productCollettion)
         {
