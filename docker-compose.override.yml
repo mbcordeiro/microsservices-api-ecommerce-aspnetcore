@@ -51,6 +51,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=basket:6379"
+      - "GrpcSettings:discountapi"
     depends_on: 
       - basketdb
     ports:
@@ -67,3 +68,17 @@ services:
     ports:
       - "8082:80"
 
+  discountgrpc:
+    container_name: discountapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=discountdb;Port=5432;Database=DiscountDb;User Id=postgres;Password:postgres"
+      - ASPNETCORE_URLS=https://+:443;http://+:8083:80    
+    depends_on:
+      - discountdb
+    ports:
+      - "8083:80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
